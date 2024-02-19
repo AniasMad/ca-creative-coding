@@ -78,25 +78,26 @@ function setup(){
 
     let stackedBarChart03 = {
         data: cleanData,
-        yValue: ["Male","Female","Total"],
+        yValue: ["Male", "Female"],
         xValue: "Age_Group",
         chartWidth: 400,
         chartHeight: 300,
-        xPos: 100,
+        xPos: 50,
         yPos: 900,
         axisLineColour: "fff",
         barWidth: 20,
         labelTextSize:15,
         labelPadding:10,
         labelColour: "fff",
+        labelRotation: 45,
         tickNum: 5,
         tickLength: 10,
         tickColour: "fff",
-        vertLabelPadding: 20,
+        vertLabelPadding: 5,
         rounding: true,
         roundingDecimal: 1,
         lineWeight: 1,
-        colours: ["#7d3ddb", "#6035cc", "#402e99"],
+        colours: ["#38138f", "#309bb0"],
         backgroundLine: "#616161",
         title: "Stacked Bar Chart",
         titleSize: 20,
@@ -106,7 +107,7 @@ function setup(){
 
     barCharts.push(new BarChart(barChart01));
     barCharts.push(new HorizontalBarChart(horizontalBarChart02));
-    barCharts.push(new StackedBarChart(stackedBarChart03))
+    barCharts.push(new StackedBarChart(stackedBarChart03));
 }
 
 function draw() {

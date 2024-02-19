@@ -82,7 +82,7 @@ class BarChart{
             rotate(this.labelRotation);
             text(labels[i], 0, 0);
             pop();
-            translate(gap+this.barWidth,0)
+            translate(gap+this.barWidth,0);
         }
         pop()
         

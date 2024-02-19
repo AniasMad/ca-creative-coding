@@ -20,25 +20,36 @@ class StackedBarChart{
         this.rounding = obj.rounding; // do vertical values get rounded
         this.roundingDecimal = obj.roundingDecimal; // amount of decimals shown
         this.lineWeight = obj.lineWeight; // stroke weight
-        this.colours = obj.colours;
-        this.backgroundLine = obj.backgroundLine;
-        this.title = obj.title;
-        this.titleSize = obj.titleSize;
-        this.titlePadding = obj.titlePadding;
-        this.titleColour = obj.titleColour;
+        this.colours = obj.colours; // defines an array of colours for the chart
+        this.backgroundLine = obj.backgroundLine; // defines the colour for background lines
+        this.title = obj.title; // defines the title of the chart
+        this.titleSize = obj.titleSize; // defines the size of the font for title
+        this.titlePadding = obj.titlePadding; // defines the padding for title
+        this.titleColour = obj.titleColour; // defines the colour for text of title
     }
 
     render(){
         push ();
         translate (this.xPos,this.yPos);
         strokeWeight(this.lineWeight);
-        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1)
-        let labels = this.data.map(d => d[this.xValue])
-        let scale = this.chartHeight/max(this.data.map(d => d[this.yValue]));
-        
+        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1) // Calculate the gap
+        let labels = this.data.map(d => d[this.xValue]) // Map the horizontal labels into array
 
+        let allValues = [];
+        let allValuesCalc =[];
+
+        for(let i=0; i<this.yValue.length; i++)
+        {
+            allValues.push(max(this.data.map((row) => +row[this.yValue[i]])));
+        }
+        console.log(allValues);
+        allValuesCalc = allValues.reduce((e, x) => e + x, 0);
+
+        let scale = this.chartHeight/allValuesCalc;
+        
         let tickGap = this.chartHeight/this.tickNum;
-        let tickValue = max(this.data.map(d => d[this.yValue]))/this.tickNum; // tickValue is vertical elements (numbers)
+        
+        let tickValue = allValuesCalc/this.tickNum; // tickValue is vertical elements (numbers)
 
         // ------- This loop draws background lines -------
 
@@ -64,16 +75,26 @@ class StackedBarChart{
         textStyle(NORMAL);
 
         // ------- this loop draws horizontal elements -------
-        push()
+        push();
         translate(gap,0);
         for(let i=0; i<this.data.length; i++){
+            let row = this.data[i];
+            push();
+            for(let j=0;j<this.yValue.length; j++)
+            {
+                fill(this.colours[j % this.colours.length]); // colour change
+                rect (0,0,this.barWidth, -row[this.yValue[j]]*scale); // render rectangle
+                translate(0,-row[this.yValue[j]]*scale);
+            }
+            pop();
             
-            fill(this.colours[i % this.colours.length]);
+            
+            
 
-            rect (0,0,this.barWidth, -this.data[i][this.yValue]*scale);
+            
             noStroke();
 
-            fill(this.labelColour);
+            fill(this.labelColour); // 
             textSize(this.labelTextSize);
             textAlign(LEFT, CENTER);
             push();
@@ -82,21 +103,8 @@ class StackedBarChart{
             rotate(this.labelRotation);
             text(labels[i], 0, 0);
             pop();
-            translate(gap+this.barWidth,0)
+            translate(gap+this.barWidth,0); // move to next bar
         }
-        pop()
-
-        push();
-
-        translate(gap,0);
-        for (let i=0;i<this.data.length; i++)
-        {
-            for(let j=0;j<this.xValue.length; j++)
-            {
-                
-            }
-        }
-
         pop();
         
         // ------- this draws vertical elements -------
@@ -113,6 +121,7 @@ class StackedBarChart{
 
             if(this.rounding == true) {
                 let labelVert = tickValue*i;
+                console.log(tickValue)
                 text(labelVert.toFixed(this.roundingDecimal),-this.tickLength-this.vertLabelPadding,-i*tickGap); // "toFixed" rounds the number with the specific amount of decimals
             }
             else
