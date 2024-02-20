@@ -15,7 +15,7 @@ class HorizontalBarChart{
         this.tickNum = obj.tickNum; // defines the amount of ticks
         this.tickLength = obj.tickLength; // length of vertical ticks
         this.tickColour = obj.tickColour; // colour of vertical ticks
-        this.vertLabelPadding = obj.vertLabelPadding;
+        this.horizLabelPadding = obj.horizLabelPadding;
         this.rounding = obj.rounding; // do vertical values get rounded
         this.roundingDecimal = obj.roundingDecimal; // amount of decimals shown
         this.lineWeight = obj.lineWeight; // stroke weight
@@ -97,12 +97,12 @@ class HorizontalBarChart{
             textAlign(CENTER,BASELINE);
 
             if(this.rounding == true) {
-                let labelVert = tickValue*i;
-                text(labelVert.toFixed(this.roundingDecimal),i*tickGap,this.tickLength+this.vertLabelPadding); // "toFixed" rounds the number with the specific amount of decimals
+                let labelHoriz = tickValue*i;
+                text(labelHoriz.toFixed(this.roundingDecimal),i*tickGap,this.tickLength+this.horizLabelPadding); // "toFixed" rounds the number with the specific amount of decimals
             }
             else
             {
-                text(tickValue*i,i*tickGap,this.tickLength+this.vertLabelPadding);
+                text(tickValue*i,i*tickGap,this.tickLength+this.horizLabelPadding);
             }
         }
         pop();

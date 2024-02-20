@@ -1,4 +1,4 @@
-class StackedBarChart{
+class BarChart100{
     constructor(obj){
         this.data = obj.data; // what data is being imported
         this.yValue = obj.yValue; // vertical label data
@@ -82,9 +82,18 @@ class StackedBarChart{
             push();
             for(let j=0;j<this.yValue.length; j++)
             {
+                let sumValue = 0;
+                for(let q=0; q<this.yValue.length; q++)
+                {
+                    sumValue += +row[this.yValue[q]];
+                }
                 fill(this.colours[j % this.colours.length]); // colour change
-                rect (0,0,this.barWidth, -row[this.yValue[j]]*scale); // render rectangle
-                translate(0,-row[this.yValue[j]]*scale);
+                if(sumValue != 0)
+                {
+                    let scaleValue = this.chartHeight/sumValue;
+                    rect(0,0,this.barWidth, scaleValue*-row[this.yValue[j]]); // render rectangle
+                    translate(0,-row[this.yValue[j]]*scaleValue);
+                }
             }
             pop();
             
