@@ -42,7 +42,6 @@ class StackedBarChart{
         {
             allValues.push(max(this.data.map((row) => +row[this.yValue[i]])));
         }
-        console.log(allValues);
         allValuesCalc = allValues.reduce((e, x) => e + x, 0);
 
         let scale = this.chartHeight/allValuesCalc;
@@ -117,7 +116,6 @@ class StackedBarChart{
 
             if(this.rounding == true) {
                 let labelVert = tickValue*i;
-                console.log(tickValue)
                 text(labelVert.toFixed(this.roundingDecimal),-this.tickLength-this.vertLabelPadding,-i*tickGap); // "toFixed" rounds the number with the specific amount of decimals
             }
             else
