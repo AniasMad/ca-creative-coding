@@ -48,7 +48,7 @@ class BarChart100{
         
         let tickGap = this.chartHeight/this.tickNum;
         
-        let tickValue = allValuesCalc/this.tickNum; // tickValue is vertical elements (numbers)
+        let tickValue = 100/this.tickNum; // tickValue is vertical elements (numbers), 100 is for a 100% chart.
 
         // ------- This loop draws background lines -------
 
@@ -125,11 +125,11 @@ class BarChart100{
 
             if(this.rounding == true) {
                 let labelVert = tickValue*i;
-                text(labelVert.toFixed(this.roundingDecimal),-this.tickLength-this.vertLabelPadding,-i*tickGap); // "toFixed" rounds the number with the specific amount of decimals
+                text(labelVert.toFixed(this.roundingDecimal)+"%",-this.tickLength-this.vertLabelPadding,-i*tickGap); // "toFixed" rounds the number with the specific amount of decimals
             }
             else
             {
-                text(tickValue*i,-this.tickLength,-i*tickGap);
+                text(tickValue*i+"%",-this.tickLength,-i*tickGap);
             }
         }
         pop();

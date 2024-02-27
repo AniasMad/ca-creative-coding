@@ -75,14 +75,14 @@ class ScatterPlot{
 
         // ------- this loop draws horizontal elements -------
         push();
-        translate(gap,0);
+        translate(gap, 0);
         for(let i=0; i<this.data.length; i++){
             let row = this.data[i];
             push();
             for(let j=0;j<this.yValue.length; j++)
             {
                 fill(this.colours[j % this.colours.length]); // colour change
-                ellipse(0,-row[this.yValue[j]]*scale,10,10); // render circle
+                ellipse(0,-row[this.yValue[j]]*scale,this.barWidth,this.barWidth); // render circle
             }
             pop();
             

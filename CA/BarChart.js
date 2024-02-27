@@ -20,26 +20,50 @@ class BarChart{
         this.rounding = obj.rounding; // do vertical values get rounded
         this.roundingDecimal = obj.roundingDecimal; // amount of decimals shown
         this.lineWeight = obj.lineWeight; // stroke weight
-        this.colours = obj.colours;
-        this.backgroundLine = obj.backgroundLine;
-        this.title = obj.title;
-        this.titleSize = obj.titleSize;
-        this.titlePadding = obj.titlePadding;
-        this.titleColour = obj.titleColour;
+        this.colours = obj.colours; // defines an array of colours for the chart
+        this.backgroundLine = obj.backgroundLine; // defines the colour for background lines
+        this.title = obj.title; // defines the title of the chart
+        this.titleSize = obj.titleSize; // defines the size of the font for title
+        this.titlePadding = obj.titlePadding; // defines the padding for title
+        this.titleColour = obj.titleColour; // defines the colour for text of title
+        this.chartType = obj.chartType;
     }
 
     render(){
         push ();
         translate (this.xPos,this.yPos);
         strokeWeight(this.lineWeight);
-        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1)
-        let labels = this.data.map(d => d[this.xValue])
-        let scale = this.chartHeight/max(this.data.map(d => d[this.yValue]));
+        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1) // Calculate the gap
+        let labels = this.data.map(d => d[this.xValue]) // Map the horizontal labels into array
+
+        let allValues = [];
+        let allValuesCalc =[];
+
         
-
+        for(let i=0; i<this.yValue.length; i++)
+        {
+            allValues.push(max(this.data.map((row) => +row[this.yValue[i]])));
+        }
+        if (this.chartType == "stacked")
+        {
+            allValuesCalc = allValues.reduce((e, x) => e + x, 0);
+        }
+        else {
+            allValuesCalc = max(allValues);
+        }
+        
+        let tickValue;
+        let scale = this.chartHeight/allValuesCalc;
+        
         let tickGap = this.chartHeight/this.tickNum;
-        let tickValue = max(this.data.map(d => d[this.yValue]))/this.tickNum; // tickValue is vertical elements (numbers)
-
+        if (this.chartType == "100%")
+        {
+            tickValue = 100/this.tickNum;
+        } else
+        {
+            tickValue = allValuesCalc/this.tickNum; // tickValue is vertical elements (numbers)
+        }   
+        
         // ------- This loop draws background lines -------
 
         for (let i=1; i<=this.tickNum; i++) {
@@ -64,16 +88,46 @@ class BarChart{
         textStyle(NORMAL);
 
         // ------- this loop draws horizontal elements -------
-        push()
+        push();
         translate(gap,0);
         for(let i=0; i<this.data.length; i++){
+            let row = this.data[i];
+            push();
+            for(let j=0;j<this.yValue.length; j++)
+            {
+                if (this.chartType == "stacked")
+                {
+                    fill(this.colours[j % this.colours.length]); // colour change
+                    rect (0,0,this.barWidth, -row[this.yValue[j]]*scale); // render rectangle
+                    translate(0,-row[this.yValue[j]]*scale);
+                }
+                else if (this.chartType == "100%")
+                {
+                    let sumValue = 0;
+                    for(let q=0; q<this.yValue.length; q++)
+                    {
+                        sumValue += +row[this.yValue[q]];
+                    }
+                    fill(this.colours[j % this.colours.length]); // colour change
+                    if(sumValue != 0)
+                    {
+                        let scaleValue = this.chartHeight/sumValue;
+                        rect(0,0,this.barWidth, scaleValue*-row[this.yValue[j]]); // render rectangle
+                        translate(0,-row[this.yValue[j]]*scaleValue);
+                    }
+                }
+                else
+                {
+                    fill(this.colours[j % this.colours.length]); // colour change
+                    rect (0,0,this.barWidth, -row[this.yValue[j]]*scale); // render rectangle
+                    translate(this.barWidth,0);
+                }
+            }
+            pop();
             
-            fill(this.colours[i % this.colours.length]);
-
-            rect (0,0,this.barWidth, -this.data[i][this.yValue]*scale);
             noStroke();
 
-            fill(this.labelColour);
+            fill(this.labelColour); // text colour
             textSize(this.labelTextSize);
             textAlign(LEFT, CENTER);
             push();
@@ -82,9 +136,9 @@ class BarChart{
             rotate(this.labelRotation);
             text(labels[i], 0, 0);
             pop();
-            translate(gap+this.barWidth,0);
+            translate(gap+this.barWidth,0); // move to next bar
         }
-        pop()
+        pop();
         
         // ------- this draws vertical elements -------
 
@@ -100,11 +154,25 @@ class BarChart{
 
             if(this.rounding == true) {
                 let labelVert = tickValue*i;
-                text(labelVert.toFixed(this.roundingDecimal),-this.tickLength-this.vertLabelPadding,-i*tickGap); // "toFixed" rounds the number with the specific amount of decimals
+                if (this.chartType == "100%") {
+                    text(labelVert.toFixed(this.roundingDecimal)+"%",-this.tickLength-this.vertLabelPadding,-i*tickGap); // "toFixed" rounds the number with the specific amount of decimals
+                }
+                else 
+                {
+                    text(labelVert.toFixed(this.roundingDecimal),-this.tickLength-this.vertLabelPadding,-i*tickGap); // "toFixed" rounds the number with the specific amount of decimals
+                }
             }
             else
             {
-                text(tickValue*i,-this.tickLength,-i*tickGap);
+                if (this.chartType == "100%")
+                {
+                    text(tickValue*i+"%",-this.tickLength,-i*tickGap);
+                }
+                else
+                {
+                    text(tickValue*i,-this.tickLength,-i*tickGap);
+                }
+                
             }
         }
         pop();

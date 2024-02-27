@@ -28,7 +28,7 @@ function setup(){
 
     let barChart01 = {
         data: cleanData,
-        yValue: "Population with a GP Visit Card (Number)",
+        yValue: ["Population with a GP Visit Card (Number)"],
         xValue: "Year",
         chartWidth: 400,
         chartHeight: 300,
@@ -47,24 +47,25 @@ function setup(){
         rounding: true,
         roundingDecimal: 1,
         lineWeight: 1,
-        colours: ["#7d3ddb", "#6035cc", "#402e99"],
+        colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
         title: "Bar Chart",
         titleSize: 20,
         titlePadding: 10,
-        titleColour: "fff"
+        titleColour: "fff",
+        chartType: ""
     };
 
     let horizontalBarChart02 = {
         data: cleanData,
-        yValue: "Population with a GP Visit Card (Number)",
+        yValue: ["Population with a GP Visit Card (Number)", "Population with a Medical Card (Number)"],
         xValue: "Year",
         chartWidth: 400,
         chartHeight: 300,
         xPos: 650,
         yPos: 400,
         axisLineColour: "fff",
-        barWidth: 20,
+        barWidth: 10,
         labelTextSize:15,
         labelPadding:10,
         labelColour: "fff",
@@ -75,12 +76,13 @@ function setup(){
         rounding: true,
         roundingDecimal: 1,
         lineWeight: 1,
-        colours: ["#7d3ddb", "#6035cc", "#402e99"],
+        colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
         title: "Horizontal Bar Chart",
         titleSize: 20,
         titlePadding: 10,
-        titleColour: "fff"
+        titleColour: "fff",
+        chartType: "s"
     };
 
     let stackedBarChart03 = {
@@ -92,7 +94,7 @@ function setup(){
         xPos: 100,
         yPos: 900,
         axisLineColour: "fff",
-        barWidth: 20,
+        barWidth: 15,
         labelTextSize:15,
         labelPadding:10,
         labelColour: "fff",
@@ -104,28 +106,29 @@ function setup(){
         rounding: true,
         roundingDecimal: 1,
         lineWeight: 1,
-        colours: ["#38138f", "#309bb0"],
+        colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
         title: "Stacked Bar Chart",
         titleSize: 20,
         titlePadding: 10,
-        titleColour: "fff"
+        titleColour: "fff",
+        chartType: "stacked"
     };
 
     let barChart1004 = {
-        data: cleanData,
-        yValue: ["Population with a GP Visit Card (Number)", "Population with a Medical Card (Number)"],
-        xValue: "Year",
+        data: cleanData2,
+        yValue: ["Young age dependency (0-14)", "Old age dependency (65 & over)"],
+        xValue: "Countries",
         chartWidth: 400,
         chartHeight: 300,
         xPos: 650,
         yPos: 900,
         axisLineColour: "fff",
-        barWidth: 20,
-        labelTextSize:15,
+        barWidth: 11,
+        labelTextSize:10,
         labelPadding:10,
         labelColour: "fff",
-        labelRotation: 45,
+        labelRotation: 90,
         tickNum: 5,
         tickLength: 10,
         tickColour: "fff",
@@ -133,28 +136,29 @@ function setup(){
         rounding: true,
         roundingDecimal: 1,
         lineWeight: 1,
-        colours: ["#38138f", "#309bb0"],
+        colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
         title: "100% Stacked Bar Chart",
         titleSize: 20,
         titlePadding: 10,
-        titleColour: "fff"
+        titleColour: "fff",
+        chartType: "100%"
     };
 
-    let lineChart05 = {
+    let scatterplot = {
         data: cleanData2,
-        yValue: ["Young and old age dependency"],
+        yValue: ["Young age dependency (0-14)", "Old age dependency (65 & over)"],
         xValue: "Countries",
         chartWidth: 400,
         chartHeight: 300,
         xPos: 100,
         yPos: 1400,
         axisLineColour: "fff",
-        barWidth: 20,
-        labelTextSize:15,
+        barWidth: 7,
+        labelTextSize:10,
         labelPadding:10,
         labelColour: "fff",
-        labelRotation: 45,
+        labelRotation: 90,
         tickNum: 5,
         tickLength: 10,
         tickColour: "fff",
@@ -162,7 +166,7 @@ function setup(){
         rounding: true,
         roundingDecimal: 1,
         lineWeight: 1,
-        colours: ["#69fcff", "#309bb0"],
+        colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
         title: "Scatter Plot",
         titleSize: 20,
@@ -172,9 +176,9 @@ function setup(){
 
     barCharts.push(new BarChart(barChart01));
     barCharts.push(new HorizontalBarChart(horizontalBarChart02));
-    barCharts.push(new StackedBarChart(stackedBarChart03));
-    barCharts.push(new BarChart100(barChart1004));
-    barCharts.push(new ScatterPlot(lineChart05));
+    barCharts.push(new BarChart(stackedBarChart03));
+    barCharts.push(new BarChart(barChart1004));
+    barCharts.push(new ScatterPlot(scatterplot));
 }
 
 function draw() {

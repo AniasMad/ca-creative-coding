@@ -25,19 +25,42 @@ class HorizontalBarChart{
         this.titleSize = obj.titleSize;
         this.titlePadding = obj.titlePadding;
         this.titleColour = obj.titleColour;
+        this.chartType = obj.chartType;
     }
 
     render(){
         push ();
         translate (this.xPos,this.yPos);
         strokeWeight(this.lineWeight);
-        let gap = (this.chartHeight - (this.data.length * this.barWidth))/(this.data.length +1)
+        let gap = (this.chartHeight - (this.data.length * this.barWidth))/(this.data.length +1) // Calculate the gap
         let labels = this.data.map(d => d[this.xValue])
-        let scale = this.chartWidth/max(this.data.map(d => d[this.yValue]));
+        let allValues = [];
+        let allValuesCalc = [];
         
-
+        
+        for(let i=0; i<this.yValue.length; i++)
+        {
+            allValues.push(max(this.data.map((row) => +row[this.yValue[i]])));
+        }
+        if (this.chartType == "stacked")
+        {
+            allValuesCalc = allValues.reduce((e, x) => e + x, 0);
+        }
+        else {
+            allValuesCalc = max(allValues);
+        }
+        
+        let tickValue;
+        let scale = this.chartWidth/allValuesCalc;
+        
         let tickGap = this.chartWidth/this.tickNum;
-        let tickValue = max(this.data.map(d => d[this.yValue]))/this.tickNum; // tickValue is vertical elements (numbers)
+        if (this.chartType == "100%")
+        {
+            tickValue = 100/this.tickNum;
+        } else
+        {
+            tickValue = allValuesCalc/this.tickNum; // tickValue is vertical elements (numbers)
+        }   
 
         // ------- This loop draws background lines -------
 
@@ -60,10 +83,39 @@ class HorizontalBarChart{
         push()
         translate(0,-gap);
         for(let i=0; i<this.data.length; i++){
-            
-            fill(this.colours[i % this.colours.length]);
-
-            rect (0,0,this.data[i][this.yValue]*scale,-this.barWidth);
+            let row = this.data[i];
+            push();
+            for(let j=0;j<this.yValue.length; j++)
+            {
+                if (this.chartType == "stacked")
+                {
+                    fill(this.colours[j % this.colours.length]); // colour change
+                    rect (0,0,row[this.yValue[j]]*scale,-this.barWidth); // render rectangle
+                    translate(row[this.yValue[j]]*scale,0);
+                }
+                else if (this.chartType == "100%")
+                {
+                    let sumValue = 0;
+                    for(let q=0; q<this.yValue.length; q++)
+                    {
+                        sumValue += +row[this.yValue[q]];
+                    }
+                    fill(this.colours[j % this.colours.length]); // colour change
+                    if(sumValue != 0)
+                    {
+                        let scaleValue = this.chartWidth/sumValue;
+                        rect(0,0,row[this.yValue[j]]*scaleValue,-this.barWidth); // render rectangle
+                        translate(row[this.yValue[j]]*scaleValue,0);
+                    }
+                }
+                else
+                {
+                    fill(this.colours[j % this.colours.length]); // colour change
+                    rect (0,0,row[this.yValue[j]]*scale,-this.barWidth); // render rectangle
+                    translate(0,-this.barWidth);
+                }
+            }
+            pop();
             noStroke();
 
             fill(this.labelColour);
@@ -95,14 +147,28 @@ class HorizontalBarChart{
             fill(this.labelColour); // draw labels
             textSize(this.labelTextSize);
             textAlign(CENTER,BASELINE);
-
+            
             if(this.rounding == true) {
                 let labelHoriz = tickValue*i;
-                text(labelHoriz.toFixed(this.roundingDecimal),i*tickGap,this.tickLength+this.horizLabelPadding); // "toFixed" rounds the number with the specific amount of decimals
+                if (this.chartType == "100%") {
+                    text(labelHoriz.toFixed(this.roundingDecimal)+"%",i*tickGap,this.tickLength+this.horizLabelPadding); // "toFixed" rounds the number with the specific amount of decimals
+                }
+                else 
+                {
+                    text(labelHoriz.toFixed(this.roundingDecimal),i*tickGap,this.tickLength+this.horizLabelPadding); // "toFixed" rounds the number with the specific amount of decimals
+                }
             }
             else
             {
-                text(tickValue*i,i*tickGap,this.tickLength+this.horizLabelPadding);
+                if (this.chartType == "100%")
+                {
+                    text(tickValue*i+"%",i*tickGap,this.tickLength+this.horizLabelPadding);
+                }
+                else
+                {
+                    text(tickValue*i,i*tickGap,this.tickLength+this.horizLabelPadding);
+                }
+                
             }
         }
         pop();
