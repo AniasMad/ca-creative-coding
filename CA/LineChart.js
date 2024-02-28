@@ -1,4 +1,4 @@
-class ScatterPlot{
+class LineChart{
     constructor(obj){
         this.data = obj.data; // what data is being imported
         this.yValue = obj.yValue; // vertical label data
@@ -20,7 +20,7 @@ class ScatterPlot{
         this.rounding = obj.rounding; // do vertical values get rounded
         this.roundingDecimal = obj.roundingDecimal; // amount of decimals shown
         this.lineWeight = obj.lineWeight; // stroke weight
-        this.colours = obj.colours; // defines an array of colours for the chart
+        this.colour = obj.colour; // defines an array of colours for the chart
         this.backgroundLine = obj.backgroundLine; // defines the colour for background lines
         this.title = obj.title; // defines the title of the chart
         this.titleSize = obj.titleSize; // defines the size of the font for title
@@ -74,23 +74,24 @@ class ScatterPlot{
         textStyle(NORMAL);
 
         // ------- this loop draws horizontal elements -------
+        
+        beginShape();
+        vertex(0,0);
         push();
         translate(gap, 0);
+        
         for(let i=0; i<this.data.length; i++){
-            let row = this.data[i];
-            push();
-            for(let j=0;j<this.yValue.length; j++)
-            {
-                fill(this.colours[j % this.colours.length]); // colour change
-                ellipse(0,-row[this.yValue[j]]*scale,this.barWidth,this.barWidth); // render circle
-            }
-            pop();
-            
+            stroke(this.colour)
+            fill(this.colour); // colour change
+            // vertex((this.barWidth+gap)*i,-this.data[i][this.yValue]*scale); // render circle
+            vertex((this.barWidth+gap)*i,-this.data[i][this.yValue]*scale); // render circle
+            console.log(scale)
             noStroke();
 
             fill(this.labelColour); // text colour
             textSize(this.labelTextSize);
             textAlign(LEFT, CENTER);
+
             push();
             angleMode(DEGREES);
             translate(this.barWidth/2, this.labelPadding);
@@ -100,12 +101,18 @@ class ScatterPlot{
             translate(gap+this.barWidth,0); // move to next bar
         }
         pop();
+        stroke(this.colour);
+        fill(this.colour);
+        strokeWeight(this.lineWeight);
+        vertex(this.chartWidth,0);
+        endShape(CLOSE);
         
         // ------- this draws vertical elements -------
 
         for(let i=0; i<=this.tickNum; i++)
         {
             stroke(this.tickColour); // draw ticks
+            strokeWeight(1);
             line(0,-i*tickGap,-this.tickLength,-i*tickGap);
             noStroke();
             

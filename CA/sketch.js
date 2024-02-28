@@ -145,9 +145,9 @@ function setup(){
         chartType: "100%"
     };
 
-    let scatterplot = {
+    let linechart = {
         data: cleanData2,
-        yValue: ["Young age dependency (0-14)", "Old age dependency (65 & over)"],
+        yValue: ["Young age dependency (0-14)"],
         xValue: "Countries",
         chartWidth: 700,
         chartHeight: 300,
@@ -166,7 +166,7 @@ function setup(){
         rounding: true,
         roundingDecimal: 1,
         lineWeight: 1,
-        colours: ["#30ffee", "#3f14ff"],
+        colour: "#30ffee",
         backgroundLine: "#616161",
         title: "Dependency by Country",
         titleSize: 20,
@@ -178,7 +178,7 @@ function setup(){
     barCharts.push(new HorizontalBarChart(horizontalBarChart02));
     barCharts.push(new BarChart(stackedBarChart03));
     barCharts.push(new BarChart(barChart1004));
-    barCharts.push(new ScatterPlot(scatterplot));
+    barCharts.push(new LineChart(linechart));
 }
 
 function draw() {
