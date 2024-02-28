@@ -36,8 +36,8 @@ class BarChart{
         push ();
         translate (this.xPos,this.yPos);
         strokeWeight(this.lineWeight);
-        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1) // Calculate the gap
-        let labels = this.data.map(d => d[this.xValue]) // Map the horizontal labels into array
+        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1); // Calculate the gap
+        let labels = this.data.map(d => d[this.xValue]); // Map the horizontal labels into array
 
         let allValues = [];
         let allValuesCalc =[];

@@ -32,8 +32,8 @@ class LineChart{
         push ();
         translate (this.xPos,this.yPos);
         strokeWeight(this.lineWeight);
-        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1) // Calculate the gap
-        let labels = this.data.map(d => d[this.xValue]) // Map the horizontal labels into array
+        let gap = (this.chartWidth - (this.data.length * this.barWidth))/(this.data.length +1); // Calculate the gap
+        let labels = this.data.map(d => d[this.xValue]); // Map the horizontal labels into array
 
         let allValues = [];
         let allValuesCalc =[];
@@ -81,11 +81,10 @@ class LineChart{
         translate(gap, 0);
         
         for(let i=0; i<this.data.length; i++){
-            stroke(this.colour)
+            stroke(this.colour);
             fill(this.colour); // colour change
-            // vertex((this.barWidth+gap)*i,-this.data[i][this.yValue]*scale); // render circle
             vertex((this.barWidth+gap)*i,-this.data[i][this.yValue]*scale); // render circle
-            console.log(scale)
+            console.log(scale);
             noStroke();
 
             fill(this.labelColour); // text colour

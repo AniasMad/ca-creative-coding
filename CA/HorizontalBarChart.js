@@ -32,8 +32,8 @@ class HorizontalBarChart{
         push ();
         translate (this.xPos,this.yPos);
         strokeWeight(this.lineWeight);
-        let gap = (this.chartHeight - (this.data.length * this.barWidth))/(this.data.length +1) // Calculate the gap
-        let labels = this.data.map(d => d[this.xValue])
+        let gap = (this.chartHeight - (this.data.length * this.barWidth))/(this.data.length +1); // Calculate the gap
+        let labels = this.data.map(d => d[this.xValue]);
         let allValues = [];
         let allValuesCalc = [];
         
@@ -128,7 +128,7 @@ class HorizontalBarChart{
             pop();
             translate(0,-gap-this.barWidth)
         }
-        pop()
+        pop();
 
         // ------- This draws axis lines -------
 
