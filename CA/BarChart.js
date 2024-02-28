@@ -1,7 +1,7 @@
 class BarChart{
     constructor(obj = ["data", ["yValue"], "xValue", 200, 200, 0, 0, "#000000", // Declaration of default values, 
     10, 10, 10, "#000000", 45, 5, 5, "#000000", 10, false,  0, 1, ["#000000", "#fff"], //if user doesn't input something then the default will be used 
-    "#2e2e2e", "Sample title", 10, 10, "#000000", "normal"]){ 
+    "#2e2e2e", "Sample title", 10, 10, "#000000", "normal", 0]){ 
         this.data = obj.data; // what data is being imported
         this.yValue = obj.yValue; // vertical label data
         this.xValue = obj.xValue; // horizontal label data
@@ -29,6 +29,7 @@ class BarChart{
         this.titlePadding = obj.titlePadding; // defines the padding for title
         this.titleColour = obj.titleColour; // defines the colour for text of title
         this.chartType = obj.chartType;
+        this.dataStart = obj.dataStart;
     }
 
     render(){

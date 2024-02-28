@@ -7,13 +7,13 @@ let numRows;
 let numRows2;
 
 function preload(){
-    data = loadTable("data/dataCA.csv", "csv", "header");
+    data = loadTable("data/dependencygender.csv", "csv", "header");
     data2 = loadTable("data/dependencies.csv", "csv", "header");
 }
 
 function setup(){
     background(50)
-    createCanvas(1200,2000)
+    createCanvas(1500,2000)
     angleMode(DEGREES)
     noLoop();
 
@@ -28,14 +28,14 @@ function setup(){
 
     let barChart01 = {
         data: cleanData,
-        yValue: ["Population with a GP Visit Card (Number)"],
-        xValue: "Year",
-        chartWidth: 400,
+        yValue: ["Male","Female"],
+        xValue: "County and City",
+        chartWidth: 500,
         chartHeight: 300,
         xPos: 100,
         yPos: 400,
         axisLineColour: "fff",
-        barWidth: 20,
+        barWidth: 7,
         labelTextSize:15,
         labelPadding:10,
         labelColour: "fff",
@@ -49,7 +49,7 @@ function setup(){
         lineWeight: 1,
         colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
-        title: "Bar Chart",
+        title: "Depencency by Gender",
         titleSize: 20,
         titlePadding: 10,
         titleColour: "fff",
@@ -58,14 +58,14 @@ function setup(){
 
     let horizontalBarChart02 = {
         data: cleanData,
-        yValue: ["Population with a GP Visit Card (Number)", "Population with a Medical Card (Number)"],
-        xValue: "Year",
-        chartWidth: 400,
+        yValue: ["Male","Female"],
+        xValue: "County and City",
+        chartWidth: 500,
         chartHeight: 300,
-        xPos: 650,
+        xPos: 800,
         yPos: 400,
         axisLineColour: "fff",
-        barWidth: 10,
+        barWidth: 7,
         labelTextSize:15,
         labelPadding:10,
         labelColour: "fff",
@@ -78,18 +78,18 @@ function setup(){
         lineWeight: 1,
         colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
-        title: "Horizontal Bar Chart",
+        title: "Depencency by Gender (%)",
         titleSize: 20,
         titlePadding: 10,
         titleColour: "fff",
-        chartType: "s"
+        chartType: "100%"
     };
 
     let stackedBarChart03 = {
         data: cleanData,
-        yValue: ["Population with a GP Visit Card (Number)", "Population with a Medical Card (Number)"],
-        xValue: "Year",
-        chartWidth: 400,
+        yValue: ["Male","Female"],
+        xValue: "County and City",
+        chartWidth: 500,
         chartHeight: 300,
         xPos: 100,
         yPos: 900,
@@ -108,7 +108,7 @@ function setup(){
         lineWeight: 1,
         colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
-        title: "Stacked Bar Chart",
+        title: "Depencency by Age",
         titleSize: 20,
         titlePadding: 10,
         titleColour: "fff",
@@ -119,13 +119,13 @@ function setup(){
         data: cleanData2,
         yValue: ["Young age dependency (0-14)", "Old age dependency (65 & over)"],
         xValue: "Countries",
-        chartWidth: 400,
+        chartWidth: 500,
         chartHeight: 300,
-        xPos: 650,
+        xPos: 800,
         yPos: 900,
         axisLineColour: "fff",
         barWidth: 11,
-        labelTextSize:10,
+        labelTextSize:15,
         labelPadding:10,
         labelColour: "fff",
         labelRotation: 90,
@@ -138,7 +138,7 @@ function setup(){
         lineWeight: 1,
         colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
-        title: "100% Stacked Bar Chart",
+        title: "Dependency by Age (%)",
         titleSize: 20,
         titlePadding: 10,
         titleColour: "fff",
@@ -149,13 +149,13 @@ function setup(){
         data: cleanData2,
         yValue: ["Young age dependency (0-14)", "Old age dependency (65 & over)"],
         xValue: "Countries",
-        chartWidth: 400,
+        chartWidth: 700,
         chartHeight: 300,
-        xPos: 100,
+        xPos: 350,
         yPos: 1400,
         axisLineColour: "fff",
         barWidth: 7,
-        labelTextSize:10,
+        labelTextSize:15,
         labelPadding:10,
         labelColour: "fff",
         labelRotation: 90,
@@ -168,7 +168,7 @@ function setup(){
         lineWeight: 1,
         colours: ["#30ffee", "#3f14ff"],
         backgroundLine: "#616161",
-        title: "Scatter Plot",
+        title: "Dependency by Country",
         titleSize: 20,
         titlePadding: 10,
         titleColour: "fff"
